@@ -31,7 +31,7 @@ Luego procederemos a crear nuestro archivo .gitignore y lo llenaremos con las re
 
 Una vez que hayamos puesto nuestras reglas, haremos commit.
 
-> El/la estudiante es libre de escoger si hacer commit por archivo individual o agregar los dos archivos en un mismo commit
+> El/la estudiante es libre de escoger si hacer commit por archivo individual o agregar los dos archivos en un mismo commit.
 
 ```bash
     git add README.md
@@ -40,9 +40,11 @@ Una vez que hayamos puesto nuestras reglas, haremos commit.
     git commit -m "Agregado archivo .gitignore"
 ```
 
-Comprobamos que en efecto, tengamos la version 3.1 de .Net Core instalada y procedemos a crear nuestro proyecto
+Comprobamos que en efecto, tengamos la version 3.1 de .Net Core instalada y procedemos a crear nuestro proyecto.
 
 ```bash
     dotnet --version
     dotnet new webapi
 ```
+
+Hacemos commit para declarar que hemos creado nuestro proyecto.
