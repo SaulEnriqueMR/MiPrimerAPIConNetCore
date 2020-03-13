@@ -48,3 +48,8 @@ Comprobamos que en efecto, tengamos la version 3.1 de .Net Core instalada y proc
 ```
 
 Hacemos commit para declarar que hemos creado nuestro proyecto.
+
+```bash
+    git add .
+    git commit -m "Creacion del proyecto"
+```
