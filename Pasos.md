@@ -1,12 +1,12 @@
-# Mi primer API con .Net Core
+# Mi primer API con .NetCore
 
 ## Requerimientos
 
-* Estar en un sistema Linux (una distribucion basada en Debian, Ubuntu o Fedora).
-* Tener .Net Core instalado en el sistema, en su ultima [version LTS](https://dotnet.microsoft.com/download), al momento la elaboracion de esta guia es la version 3.1.
-* Tener Git instalado en el sistema.
+* Estar en un sistema *Linux* (una distribucion basada en *Debian*, *Ubuntu* o *Fedora*).
+* Tener *.NetCore* instalado en el sistema, en su ultima [version LTS](https://dotnet.microsoft.com/download), al momento la elaboracion de esta guia es la version 3.1.
+* Tener *Git* instalado en el sistema.
 * Un editor de texto o IDE.
-* Postman o cualquier herramienta para probar APIs
+* *Postman* o cualquier herramienta para probar APIs
 
 > Para esta guia se utilizara Ubuntu con VSCode
 
@@ -20,7 +20,7 @@ Primero necesitamos crear nuestro directorio donde residira nuestro proyecto. Un
     git init
 ```
 
-Luego procederemos a crear nuestro archivo .gitignore y lo llenaremos con las reglas necesarias. Ademas si asi se desea se puede crear el archivo README.
+Luego procederemos a crear nuestro archivo *.gitignore* y lo llenaremos con las reglas necesarias. Ademas si asi se desea se puede crear el archivo *README*.
 
 > Sugerencia: Para esta guia se utilizaran las [reglas especificadas en este enlace](https://github.com/dotnet/core/blob/master/.gitignore), pero el/la estudiante es libre ocupar las reglas que el considere.
 
@@ -40,7 +40,7 @@ Una vez que hayamos puesto nuestras reglas, haremos commit.
     git commit -m "Agregado archivo .gitignore"
 ```
 
-Comprobamos que en efecto, tengamos la version 3.1 de .Net Core instalada y procedemos a crear nuestro proyecto.
+Comprobamos que en efecto, tengamos la version 3.1 de *.NetCore* instalada y procedemos a crear nuestro proyecto.
 
 ```bash
     dotnet --version
@@ -53,3 +53,11 @@ Hacemos commit para declarar que hemos creado nuestro proyecto.
     git add .
     git commit -m "Creacion del proyecto"
 ```
+
+Corremos nuestro proyecto recien creado, este deberia correr en la siguiente direccion [https://localhost:5001/WeatherForecast/](https://localhost:5001/WeatherForecast/)
+
+```bash
+    dotnet run
+```
+
+> Si se quiere modificar el puerto en donde se quiere correr la aplicacion al ocupar el comando **dotnet run**, se debe modificar el archivo *MiPrimeraApi/Properties/launchSettings.json*.
