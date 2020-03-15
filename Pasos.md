@@ -7,6 +7,7 @@
 * Tener *Git* instalado en el sistema.
 * Un editor de texto o IDE.
 * *Postman* o cualquier herramienta para probar APIs
+* Tener instalado *Docker*.
 
 > Para esta guia se utilizara Ubuntu con VSCode
 
@@ -128,7 +129,7 @@ Una vez se creo el modelo, en la carpeta de *Controllers* agregar el archivo *Ar
     }
 ```
 
-Despues de eso, correr el proyecto y probarlo, ingresando al siguiente enlace: [https://localhost:5001/api/articulo](https://localhost:5001/api/articulo), esto nos deberia dar la siguiente respuesta:
+Despues de eso, correr el proyecto y probarlo, ingresando al siguiente enlace: [https://localhost:5001/api/articulo](https://localhost:5001/api/articulo), esto nos deberia dar algo similiar a lo siguiente:
 
 ```json
     [
@@ -161,4 +162,100 @@ Despues de eso, correr el proyecto y probarlo, ingresando al siguiente enlace: [
             "fechaRegistro":"2020-03-14T00:29:47.2436073-06:00"
         }
     ]
+```
+
+## Creando nuestra primer imagen
+
+En el proyecto, crear un archivo *Dockerfile* y agregar las siguiente lineas
+
+```docker
+    # Esto va a crear la imagen del SDK de Microsoft
+
+    FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build-env
+    WORKDIR /app
+
+    # Esto va a copiar el archivo csproj e instala/restaura las dependencias (Via gestor de paquetes NUGET)
+
+    COPY *.csproj ./
+    RUN dotnet restore
+
+    # Copiar los archivos del proyecto y crea el lanzamiento (release)
+
+    COPY . ./
+    RUN dotnet publish -c Release -o out
+
+    # Genera nuestra imagen
+
+    FROM mcr.microsoft.com/dotnet/core/aspnet:3.1
+    WORKDIR /app
+    EXPOSE 80
+    COPY --from=build-env /app/out .
+    ENTRYPOINT [ "dotnet", "MiPrimeraApi.dll" ]
+```
+
+Despues de eso, crearemos nuestro archivo *.dockerignore*. El cual, similar al archivo *.gitignore*, le dira a Docker que ignore esos archivos. El contenido de este archivo es el siguiente.
+
+```docker
+    bin/
+    obj/
+```
+
+Una vez tengamos nuestros archivos, ejecutamos el siguiente comando:
+
+```bash
+    sudo docker build -t <TuDockerHubID>/<NombreDelProyecto>:<Version> .
+```
+
+*Nota*: El *TuDockerHubID* y *NombreDelProyecto* deben ir en minusculas.
+
+En mi caso ejecutaria el siguiente comando
+
+```bash
+    sudo docker build -t saulenriquemr/miprimeraapi:1.0 .
+```
+
+*Nota*: Si no se especifica una version, *Docker* por defecto la creara como *latest*, y si no se pone DockerHubID ni nombre del proyecto, *Docker* le pondra un ID unico.
+
+Ahora, si ejecutamos el siguiente comando, podremos ver que ya existe nuestra imagen
+
+```bash
+    sudo docker images
+```
+
+## Corriendo nuestra imagen
+
+Ya hemos construido nuestra imagen de *Docker*, ahora el siguiente paso es correr la imagen.
+
+Ejecutar el siguiente comando:
+
+```bash
+    sudo docker run -p <PuertoDeNuestraMaquinaDondeSeEjecutara>:<PuertoExpuestoEnNuestroDockerFile> <TuDockerHubID>/<NombreDelProyecto>:<VersionSiSeEspecifico>
+```
+
+En mi caso queda algo asi:
+
+```bash
+    sudo docker run -p 8080:80 saulenriquemr/miprimeraapi:1.0
+```
+
+Ahora si accedemos a la siguiente direccion [http://localhost:8080/api/articulo](http://localhost:8080/api/articulo), nos deberia de dar el *json* que nos regreso la primera vez.
+
+## Publicando mi imagen en DockerHub
+
+Primero debemos iniciar sesion en docker con el siguiente comando
+
+```bash
+    sudo docker login
+```
+
+Luego debemos ejecutar el siguiente comando:
+
+```bash
+    sudo docker push <TuDockerHubID>/<NombreDelProyecto>:<VersionSiSeEspecifico>
+```
+
+En mi caso:
+
+```bash
+    sudo docker push saulenriquemr/miprimeraapi:1.0
 ```
