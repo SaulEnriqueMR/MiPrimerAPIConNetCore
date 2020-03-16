@@ -3,7 +3,7 @@
 ## Requerimientos
 
 * Estar en un sistema *Linux* (en una distribución basada en *Debian*, *Ubuntu* o *Fedora*).
-* Tener *.NetCore* instalado en el sistema, en su última [version LTS](https://dotnet.microsoft.com/download) (al momento la elaboración de esta guia es la versión 3.1).
+* Tener *.NetCore* instalado en el sistema, en su última [version LTS](https://dotnet.microsoft.com/download) (al momento la elaboración de esta guía es la versión 3.1).
 * Tener *Git* instalado en el sistema.
 * Un editor de texto o IDE.
 * *Postman* o cualquier herramienta para probar APIs
@@ -16,7 +16,7 @@
 
 ## Configurando entorno de trabajo
 
-Primero necesitamos crear nuestro directorio donde estará nuestro proyecto. Una vez dentro del nuevo directorio, crear el repositorio correspondiente:
+Primero necesitamos crear nuestro directorio donde estará nuestro proyecto. Una vez dentro del nuevo directorio, creamos el repositorio correspondiente:
 
 ```bash
     mkdir MiPrimerApi
@@ -35,8 +35,6 @@ Luego procederemos a crear nuestro archivo *.gitignore* y le ingresaremos las re
 
 Ahora haremos commit.
 
-> El/la estudiante es libre de escoger si hacer commit por archivo individual o agregar los dos archivos en un mismo commit.
-
 ```bash
     git add README.md
     git commit -m "Agregado README"
@@ -46,13 +44,13 @@ Ahora haremos commit.
 
 ## Creando el proyecto
 
-Para crea un proyecto ejecutamow el siguiente comando:
+Para crear un proyecto ejecutamos el siguiente comando:
 
 ```bash
     dotnet new webapi
 ```
 
-Ahora, hacemos commit para declarar que hemos creado nuestro proyecto.
+Ahora, haremos commit para declarar que hemos creado nuestro proyecto.
 
 ```bash
     git add .
@@ -70,7 +68,7 @@ Ejecutamos nuestro proyecto recien creado con el siguiente comando:
 Para acceder a nuestro proyecto ejecutandose vamos al siguiente enlace [https://localhost:5001/WeatherForecast/](https://localhost:5001/WeatherForecast/).
 
 > Este enlace se puede abrir en *Postman* o en nuestro navegador.
-> Si queremos modificar el puerto en donde se se ejecutará se debe modificar el archivo *launchSettings.json*, ubicado en *MiPrimeraApi/Properties/*.
+> Si quisieramos modificar el puerto en donde se se ejecutará debemos modificar el archivo *launchSettings.json*, ubicado en *MiPrimeraApi/Properties/*.
 
 ## Trabajando con el proyecto
 
@@ -201,7 +199,7 @@ En el proyecto, creamos un archivo *Dockerfile* y agregamos las siguiente línea
     ENTRYPOINT [ "dotnet", "MiPrimeraApi.dll" ]
 ```
 
-Despues de eso, crearemos nuestro archivo *.dockerignore*. El cuál le dirá a Docker que ignore esos archivos (similar al *.gitignore* de *Git*). El contenido de este archivo es el siguiente:
+Después de eso, crearemos nuestro archivo *.dockerignore*. El cuál le dirá a Docker que ignore esos archivos (similar al *.gitignore* de *Git*). El contenido de este archivo es el siguiente:
 
 ```docker
     bin/
