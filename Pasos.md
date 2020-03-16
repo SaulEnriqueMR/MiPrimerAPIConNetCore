@@ -11,6 +11,11 @@
 
 > Para esta guia se utilizara Ubuntu con VSCode
 
+## Entregables
+
+* Enlace al repositorio de *GitHub*
+* Enlace al repositorio de *DockerHub*
+
 ## Configurando entorno de trabajo
 
 Primero necesitamos crear nuestro directorio donde estará nuestro proyecto. Una vez dentro del nuevo directorio, se debe crear repositorio correspondiente:
