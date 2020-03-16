@@ -2,8 +2,8 @@
 
 ## Requerimientos
 
-* Estar en un sistema *Linux* (una distribucion basada en *Debian*, *Ubuntu* o *Fedora*).
-* Tener *.NetCore* instalado en el sistema, en su ultima [version LTS](https://dotnet.microsoft.com/download), al momento la elaboracion de esta guia es la version 3.1.
+* Estar en un sistema *Linux* (en una distribución basada en *Debian*, *Ubuntu* o *Fedora*).
+* Tener *.NetCore* instalado en el sistema, en su última [version LTS](https://dotnet.microsoft.com/download) (al momento la elaboración de esta guia es la versión 3.1).
 * Tener *Git* instalado en el sistema.
 * Un editor de texto o IDE.
 * *Postman* o cualquier herramienta para probar APIs
@@ -13,7 +13,7 @@
 
 ## Configurando entorno de trabajo
 
-Primero necesitamos crear nuestro directorio donde residira nuestro proyecto. Una vez dentro de nuestro nuevo directorio crear repositorio correspondiente:
+Primero necesitamos crear nuestro directorio donde estará nuestro proyecto. Una vez dentro del nuevo directorio, se debe crear repositorio correspondiente:
 
 ```bash
     mkdir MiPrimerApi
@@ -21,16 +21,16 @@ Primero necesitamos crear nuestro directorio donde residira nuestro proyecto. Un
     git init
 ```
 
-Luego procederemos a crear nuestro archivo *.gitignore* y lo llenaremos con las reglas necesarias. Ademas si asi se desea se puede crear el archivo *README*.
+Luego procederemos a crear nuestro archivo *.gitignore* y lo llenaremos con las reglas necesarias. Además, si así se desea, se puede crear el archivo *README*.
 
-> Sugerencia: Para esta guia se utilizaran las [reglas especificadas en este enlace](https://github.com/dotnet/core/blob/master/.gitignore), pero el/la estudiante es libre ocupar las reglas que el considere.
+> Sugerencia: Para esta guía se utilizaran las [reglas especificadas en este enlace](https://github.com/dotnet/core/blob/master/.gitignore), pero el/la estudiante es libre ocupar las reglas que el considere.
 
 ```bash
     touch .gitignore
     touch README.md
 ```
 
-Una vez que hayamos puesto nuestras reglas, haremos commit.
+Ahora haremos commit.
 
 > El/la estudiante es libre de escoger si hacer commit por archivo individual o agregar los dos archivos en un mismo commit.
 
@@ -43,7 +43,7 @@ Una vez que hayamos puesto nuestras reglas, haremos commit.
 
 ## Creando el proyecto
 
-Comprobamos que en efecto, tengamos la version 3.1 de *.NetCore* instalada y procedemos a crear nuestro proyecto.
+Comprobamos que tengamos la versión 3.1 de *.NetCore* instalada y procedemos a crear nuestro proyecto.
 
 ```bash
     dotnet --version
@@ -57,17 +57,19 @@ Hacemos commit para declarar que hemos creado nuestro proyecto.
     git commit -m "Creacion del proyecto"
 ```
 
-Corremos nuestro proyecto recien creado, este deberia correr en la siguiente direccion [https://localhost:5001/WeatherForecast/](https://localhost:5001/WeatherForecast/)
+> A partir de aquí el/la estudiante es libre de como manejar sus commits
+
+Corremos nuestro proyecto recien creado, este debería correr en la siguiente dirección [https://localhost:5001/WeatherForecast/](https://localhost:5001/WeatherForecast/)
 
 ```bash
     dotnet run
 ```
 
-> Si se quiere modificar el puerto en donde se quiere correr la aplicacion al ocupar el comando **dotnet run**, se debe modificar el archivo *MiPrimeraApi/Properties/launchSettings.json*.
+> Si se quiere modificar el puerto en donde se se ejecutará la aplicacion al ocupar el comando **dotnet run**, se debe modificar el archivo *MiPrimeraApi/Properties/launchSettings.json*.
 
 ## Trabajando con el proyecto
 
-En la raiz de nuestro directorio se hara un directorio con el nombre *Models* y dentro de este se creara la clase *Articulo.cs*, esta clase contiene lo siguiente:
+En la raíz de nuestro directorio se hará un directorio con el nombre *Models* y dentro de este se creará la clase *Articulo.cs*, esta clase contiene lo siguiente:
 
 ```c#
     using System;
@@ -88,7 +90,7 @@ En la raiz de nuestro directorio se hara un directorio con el nombre *Models* y 
     }
 ```
 
-Una vez se creo el modelo, en la carpeta de *Controllers* agregar el archivo *ArticuloController*. En este archivo agregar lo siguiente
+Una vez se creó el modelo, en la carpeta de *Controllers* agregar el archivo *ArticuloController*. En este archivo agregar lo siguiente
 
 ```c#
     using System;
@@ -129,7 +131,7 @@ Una vez se creo el modelo, en la carpeta de *Controllers* agregar el archivo *Ar
     }
 ```
 
-Despues de eso, correr el proyecto y probarlo, ingresando al siguiente enlace: [https://localhost:5001/api/articulo](https://localhost:5001/api/articulo), esto nos deberia dar algo similiar a lo siguiente:
+Después de eso, ejecutar el proyecto y probarlo, ingresando al siguiente enlace: [https://localhost:5001/api/articulo](https://localhost:5001/api/articulo), esto nos debería dar algo similiar a lo siguiente:
 
 ```json
     [
@@ -179,10 +181,11 @@ En el proyecto, crear un archivo *Dockerfile* y agregar las siguiente lineas
     COPY *.csproj ./
     RUN dotnet restore
 
-    # Copiar los archivos del proyecto y crea el lanzamiento (release)
+    # Esto copia los archivos del proyecto y crea el lanzamiento (release)
 
     COPY . ./
     RUN dotnet publish -c Release -o out
+    # Si este último comando se ejecuta directamente desde la consola, creará una carpeta con el nombre out y en esta carpeta se alojará la versión de producción
 
     # Genera nuestra imagen
 
@@ -193,7 +196,7 @@ En el proyecto, crear un archivo *Dockerfile* y agregar las siguiente lineas
     ENTRYPOINT [ "dotnet", "MiPrimeraApi.dll" ]
 ```
 
-Despues de eso, crearemos nuestro archivo *.dockerignore*. El cual, similar al archivo *.gitignore*, le dira a Docker que ignore esos archivos. El contenido de este archivo es el siguiente.
+Despues de eso, crearemos nuestro archivo *.dockerignore*. El cual, similar al archivo *.gitignore*, le dirá a Docker que ignore esos archivos. El contenido de este archivo es el siguiente.
 
 ```docker
     bin/
@@ -208,13 +211,13 @@ Una vez tengamos nuestros archivos, ejecutamos el siguiente comando:
 
 *Nota*: El *TuDockerHubID* y *NombreDelProyecto* deben ir en minusculas.
 
-En mi caso ejecutaria el siguiente comando
+En mi caso ejecutaría el siguiente comando
 
 ```bash
     sudo docker build -t saulenriquemr/miprimeraapi:1.0 .
 ```
 
-*Nota*: Si no se especifica una version, *Docker* por defecto la creara como *latest*, y si no se pone DockerHubID ni nombre del proyecto, *Docker* le pondra un ID unico.
+*Nota*: Si no se especifica una versión, *Docker* por defecto asignará el tag *latest*, y si no se pone DockerHubID ni nombre del proyecto, *Docker* le pondra un ID único.
 
 Ahora, si ejecutamos el siguiente comando, podremos ver que ya existe nuestra imagen
 
@@ -232,17 +235,17 @@ Ejecutar el siguiente comando:
     sudo docker run -p <PuertoDeNuestraMaquinaDondeSeEjecutara>:<PuertoExpuestoEnNuestroDockerFile> <TuDockerHubID>/<NombreDelProyecto>:<VersionSiSeEspecifico>
 ```
 
-En mi caso queda algo asi:
+En mi caso quedaría algo así:
 
 ```bash
     sudo docker run -p 8080:80 saulenriquemr/miprimeraapi:1.0
 ```
 
-Ahora si accedemos a la siguiente direccion [http://localhost:8080/api/articulo](http://localhost:8080/api/articulo), nos deberia de dar el *json* que nos regreso la primera vez.
+Ahora si accedemos a la siguiente direccion [http://localhost:8080/api/articulo](http://localhost:8080/api/articulo), nos debería de dar el *json* que nos regreso la primera vez.
 
 ## Publicando mi imagen en DockerHub
 
-Primero debemos iniciar sesion en docker con el siguiente comando
+Primero debemos iniciar sesion en *Docker* con el siguiente comando
 
 ```bash
     sudo docker login
@@ -254,8 +257,10 @@ Luego debemos ejecutar el siguiente comando:
     sudo docker push <TuDockerHubID>/<NombreDelProyecto>:<VersionSiSeEspecifico>
 ```
 
-En mi caso:
+En mi caso sería así:
 
 ```bash
     sudo docker push saulenriquemr/miprimeraapi:1.0
 ```
+
+Una vez terminado, se puede revisar el repositorio en *DockerHub*.
