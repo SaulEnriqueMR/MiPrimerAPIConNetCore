@@ -9,8 +9,6 @@
 * *Postman* o cualquier herramienta para probar APIs
 * Tener instalado *Docker*.
 
-> Para esta guia se utilizara Ubuntu con VSCode
-
 ## Entregables
 
 * Enlace al repositorio de *GitHub*
@@ -18,7 +16,7 @@
 
 ## Configurando entorno de trabajo
 
-Primero necesitamos crear nuestro directorio donde estará nuestro proyecto. Una vez dentro del nuevo directorio, se debe crear repositorio correspondiente:
+Primero necesitamos crear nuestro directorio donde estará nuestro proyecto. Una vez dentro del nuevo directorio, crear el repositorio correspondiente:
 
 ```bash
     mkdir MiPrimerApi
@@ -26,9 +24,9 @@ Primero necesitamos crear nuestro directorio donde estará nuestro proyecto. Una
     git init
 ```
 
-Luego procederemos a crear nuestro archivo *.gitignore* y lo llenaremos con las reglas necesarias. Además, si así se desea, se puede crear el archivo *README*.
+Luego procederemos a crear nuestro archivo *.gitignore* y le ingresaremos las reglas necesarias para un proyecto en *.NetCore*. Además, si así se desea, se puede crear el archivo *README*.
 
-> Sugerencia: Para esta guía se utilizaran las [reglas especificadas en este enlace](https://github.com/dotnet/core/blob/master/.gitignore), pero el/la estudiante es libre ocupar las reglas que el considere.
+> Sugerencia: Para esta guía se utilizaran las [reglas especificadas en este enlace](https://github.com/dotnet/core/blob/master/.gitignore), pero el/la estudiante es libre ocupar las reglas que considere.
 
 ```bash
     touch .gitignore
@@ -48,33 +46,35 @@ Ahora haremos commit.
 
 ## Creando el proyecto
 
-Comprobamos que tengamos la versión 3.1 de *.NetCore* instalada y procedemos a crear nuestro proyecto.
+Para crea un proyecto ejecutamow el siguiente comando:
 
 ```bash
-    dotnet --version
     dotnet new webapi
 ```
 
-Hacemos commit para declarar que hemos creado nuestro proyecto.
+Ahora, hacemos commit para declarar que hemos creado nuestro proyecto.
 
 ```bash
     git add .
     git commit -m "Creacion del proyecto"
 ```
 
-> A partir de aquí el/la estudiante es libre de como manejar sus commits
+> A partir de aquí el/la estudiante es libre de escoger como manejar sus commits.
 
-Corremos nuestro proyecto recien creado, este debería correr en la siguiente dirección [https://localhost:5001/WeatherForecast/](https://localhost:5001/WeatherForecast/)
+Ejecutamos nuestro proyecto recien creado con el siguiente comando:
 
 ```bash
     dotnet run
 ```
 
-> Si se quiere modificar el puerto en donde se se ejecutará la aplicacion al ocupar el comando **dotnet run**, se debe modificar el archivo *MiPrimeraApi/Properties/launchSettings.json*.
+Para acceder a nuestro proyecto ejecutandose vamos al siguiente enlace [https://localhost:5001/WeatherForecast/](https://localhost:5001/WeatherForecast/).
+
+> Este enlace se puede abrir en *Postman* o en nuestro navegador.
+> Si queremos modificar el puerto en donde se se ejecutará se debe modificar el archivo *launchSettings.json*, ubicado en *MiPrimeraApi/Properties/*.
 
 ## Trabajando con el proyecto
 
-En la raíz de nuestro directorio se hará un directorio con el nombre *Models* y dentro de este se creará la clase *Articulo.cs*, esta clase contiene lo siguiente:
+En la raíz de nuestro directorio, crearemos un directorio con el nombre *Models* y dentro de este se crearemos la clase *Articulo*, esta clase contiene lo siguiente:
 
 ```c#
     using System;
@@ -95,7 +95,7 @@ En la raíz de nuestro directorio se hará un directorio con el nombre *Models* 
     }
 ```
 
-Una vez se creó el modelo, en la carpeta de *Controllers* agregar el archivo *ArticuloController*. En este archivo agregar lo siguiente
+Una vez se creamos nuestro modelo, en la carpeta de *Controllers* agregaremos nuestro controlador *ArticuloController*. En este archivo agregar lo siguiente
 
 ```c#
     using System;
@@ -136,7 +136,7 @@ Una vez se creó el modelo, en la carpeta de *Controllers* agregar el archivo *A
     }
 ```
 
-Después de eso, ejecutar el proyecto y probarlo, ingresando al siguiente enlace: [https://localhost:5001/api/articulo](https://localhost:5001/api/articulo), esto nos debería dar algo similiar a lo siguiente:
+Después de eso, ejecutaremos nuestro proyecto y lo probaremo, ingresando al siguiente enlace: [https://localhost:5001/api/articulo](https://localhost:5001/api/articulo), esto nos debería dar algo similiar a lo siguiente:
 
 ```json
     [
@@ -173,7 +173,7 @@ Después de eso, ejecutar el proyecto y probarlo, ingresando al siguiente enlace
 
 ## Creando nuestra primer imagen
 
-En el proyecto, crear un archivo *Dockerfile* y agregar las siguiente lineas
+En el proyecto, creamos un archivo *Dockerfile* y agregamos las siguiente lineas
 
 ```docker
     # Esto va a crear la imagen del SDK de Microsoft
@@ -230,11 +230,11 @@ Ahora, si ejecutamos el siguiente comando, podremos ver que ya existe nuestra im
     sudo docker images
 ```
 
-## Corriendo nuestra imagen
+## Ejecutando nuestra imagen
 
-Ya hemos construido nuestra imagen de *Docker*, ahora el siguiente paso es correr la imagen.
+Ya hemos construido nuestra imagen de *Docker*, ahora el siguiente paso es crear un contenedor a partir de nuestra imagen.
 
-Ejecutar el siguiente comando:
+Ejecutamos el siguiente comando:
 
 ```bash
     sudo docker run -p <PuertoDeNuestraMaquinaDondeSeEjecutara>:<PuertoExpuestoEnNuestroDockerFile> <TuDockerHubID>/<NombreDelProyecto>:<VersionSiSeEspecifico>
@@ -248,7 +248,7 @@ En mi caso quedaría algo así:
 
 Ahora si accedemos a la siguiente direccion [http://localhost:8080/api/articulo](http://localhost:8080/api/articulo), nos debería de dar el *json* que nos regreso la primera vez.
 
-## Publicando mi imagen en DockerHub
+## Publicando la imagen en DockerHub
 
 Primero debemos iniciar sesion en *Docker* con el siguiente comando
 
