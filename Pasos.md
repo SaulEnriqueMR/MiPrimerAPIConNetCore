@@ -263,4 +263,4 @@ En mi caso sería así:
     sudo docker push saulenriquemr/miprimeraapi:1.0
 ```
 
-Una vez terminado, se puede revisar el repositorio en *DockerHub*.
+Una vez terminado, se puede revisar el repositorio en [*DockerHub*](https://hub.docker.com/).
