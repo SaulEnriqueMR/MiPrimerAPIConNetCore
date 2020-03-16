@@ -173,7 +173,7 @@ Después de eso, ejecutaremos nuestro proyecto y lo probaremo, ingresando al sig
 
 ## Creando nuestra primer imagen
 
-En el proyecto, creamos un archivo *Dockerfile* y agregamos las siguiente lineas
+En el proyecto, creamos un archivo *Dockerfile* y agregamos las siguiente líneas:
 
 ```docker
     # Esto va a crear la imagen del SDK de Microsoft
@@ -201,7 +201,7 @@ En el proyecto, creamos un archivo *Dockerfile* y agregamos las siguiente lineas
     ENTRYPOINT [ "dotnet", "MiPrimeraApi.dll" ]
 ```
 
-Despues de eso, crearemos nuestro archivo *.dockerignore*. El cual, similar al archivo *.gitignore*, le dirá a Docker que ignore esos archivos. El contenido de este archivo es el siguiente.
+Despues de eso, crearemos nuestro archivo *.dockerignore*. El cuál le dirá a Docker que ignore esos archivos (similar al *.gitignore* de *Git*). El contenido de este archivo es el siguiente:
 
 ```docker
     bin/
@@ -214,9 +214,9 @@ Una vez tengamos nuestros archivos, ejecutamos el siguiente comando:
     sudo docker build -t <TuDockerHubID>/<NombreDelProyecto>:<Version> .
 ```
 
-*Nota*: El *TuDockerHubID* y *NombreDelProyecto* deben ir en minusculas.
+*Nota*: El *TuDockerHubID* y *NombreDelProyecto* deben ir en minúsculas.
 
-En mi caso ejecutaría el siguiente comando
+En mi caso ejecutaría el siguiente comando:
 
 ```bash
     sudo docker build -t saulenriquemr/miprimeraapi:1.0 .
@@ -224,7 +224,7 @@ En mi caso ejecutaría el siguiente comando
 
 *Nota*: Si no se especifica una versión, *Docker* por defecto asignará el tag *latest*, y si no se pone DockerHubID ni nombre del proyecto, *Docker* le pondra un ID único.
 
-Ahora, si ejecutamos el siguiente comando, podremos ver que ya existe nuestra imagen
+Ahora, si ejecutamos el siguiente comando, podremos ver que ya existe nuestra imagen:
 
 ```bash
     sudo docker images
@@ -246,11 +246,11 @@ En mi caso quedaría algo así:
     sudo docker run -p 8080:80 saulenriquemr/miprimeraapi:1.0
 ```
 
-Ahora si accedemos a la siguiente direccion [http://localhost:8080/api/articulo](http://localhost:8080/api/articulo), nos debería de dar el *json* que nos regreso la primera vez.
+Ahora si accedemos a la siguiente dirección [http://localhost:8080/api/articulo](http://localhost:8080/api/articulo), nos debería dar el *json* que nos regreso la primera vez.
 
 ## Publicando la imagen en DockerHub
 
-Primero debemos iniciar sesion en *Docker* con el siguiente comando
+Primero debemos iniciar sesión en *Docker* con el siguiente comando:
 
 ```bash
     sudo docker login
@@ -268,4 +268,4 @@ En mi caso sería así:
     sudo docker push saulenriquemr/miprimeraapi:1.0
 ```
 
-Una vez terminado, se puede revisar el repositorio en [*DockerHub*](https://hub.docker.com/).
+Una vez terminado, podemos revisar el repositorio en [*DockerHub*](https://hub.docker.com/).
