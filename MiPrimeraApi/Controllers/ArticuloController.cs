@@ -78,8 +78,8 @@ namespace MiPrimeraApi.Controllers
                 });
             }
             articulo.FechaRegistro = DateTime.Now;
-            // return CreatedAtAction(nameof(Registrar), new {articulo.Id}, articulo);
-            return Ok(articulos);
+            return CreatedAtAction(nameof(ObtenerPorId), new {articulo.Id}, articulo);
+            //return Ok(articulos);
         }
 
         // PUT api/articulo/5
