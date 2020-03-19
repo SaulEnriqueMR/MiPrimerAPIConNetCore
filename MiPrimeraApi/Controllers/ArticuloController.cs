@@ -46,6 +46,18 @@ namespace MiPrimeraApi.Controllers
             return Ok(articulo);
         }
 
+        [HttpGet]
+        [Route("nombre/{nombre}")]
+        public IActionResult BuscarPorAtributo(string nombre) {
+            return Ok(nombre);
+        }
+
+        [HttpGet]
+        [Route("buscar")]
+        public IActionResult BuscarPorQueryParameter(string nombre) {
+            return Ok(nombre);
+        }
+
         // POST api/articulo
         [HttpPost]
         [Route("")]
