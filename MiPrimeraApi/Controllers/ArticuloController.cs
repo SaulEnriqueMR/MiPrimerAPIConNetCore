@@ -12,17 +12,17 @@ namespace MiPrimeraApi.Controllers
     [ApiController]
     public class ArticuloController : ControllerBase
     {
-        List<Articulo> articulos { set; get; }
+        List<Articulo> articulos = new List<Articulo>()
+        {
+            new Articulo { Id = 1, Nombre = "Laptop", Descripcion = "Laptop HP", Precio = 15000.00, FechaRegistro = DateTime.Now },
+            new Articulo { Id = 2, Nombre = "Impresora", Descripcion = "Impresora Epson", Precio = 8700.00, FechaRegistro = DateTime.Now },
+            new Articulo { Id = 3, Nombre = "Monito", Descripcion = "Monitor ASUS", Precio = 1600.00, FechaRegistro = DateTime.Now },
+            new Articulo { Id = 4, Nombre = "Cable USB", Descripcion = "Cable USB Generico", Precio = 193.00, FechaRegistro = DateTime.Now }
+        };
 
         public ArticuloController()
         {
-            articulos = new List<Articulo>()
-            {
-                new Articulo { Id = 1, Nombre = "Laptop", Descripcion = "Laptop HP", Precio = 15000.00, FechaRegistro = DateTime.Now },
-                new Articulo { Id = 2, Nombre = "Impresora", Descripcion = "Impresora Epson", Precio = 8700.00, FechaRegistro = DateTime.Now },
-                new Articulo { Id = 3, Nombre = "Monito", Descripcion = "Monitor ASUS", Precio = 1600.00, FechaRegistro = DateTime.Now },
-                new Articulo { Id = 4, Nombre = "Cable USB", Descripcion = "Cable USB Generico", Precio = 193.00, FechaRegistro = DateTime.Now }
-            };
+            
         }
 
         // GET api/articulo
@@ -38,20 +38,47 @@ namespace MiPrimeraApi.Controllers
         [Route("{id}")]
         public IActionResult ObtenerPorId(int id)
         {
-            return Ok();
+            var articulo = articulos.FirstOrDefault(a => a.Id == id);
+            if (articulo == null)
+            {
+                return NotFound();   
+            }
+            return Ok(articulo);
         }
 
         // POST api/articulo
         [HttpPost]
+        [Route("")]
         public IActionResult Registrar(Articulo articulo)
         {
-            return Ok();
+            articulos.Add(articulo);
+            if (articulo.Descripcion == null)
+            {
+                return BadRequest(new 
+                {
+                    errors = new 
+                    {
+                        Descripcion = new List<string>()
+                        {
+                            "Ingrese una descripcion"
+                        }
+                    }
+                });
+            }
+            articulo.FechaRegistro = DateTime.Now;
+            // return CreatedAtAction(nameof(Registrar), new {articulo.Id}, articulo);
+            return Ok(articulos);
         }
 
         // PUT api/articulo/5
         [HttpPut]
         public IActionResult Editar(int id, Articulo articulo)
         {
+            articulo.Id = id;
+            var indice = articulos.IndexOf(articulo);
+            articulos[indice].Nombre = articulo.Nombre;
+            articulos[indice].Descripcion = articulo.Descripcion;
+            articulos[indice].Precio = articulo.Precio;
             return Ok();
         }
 
@@ -59,6 +86,8 @@ namespace MiPrimeraApi.Controllers
         [HttpDelete]
         public IActionResult Borrar(int id)
         {
+            var articulo = articulos.FirstOrDefault(a => a.Id == id);
+            articulos.Remove(articulo);
             return Ok();
         }
     }
