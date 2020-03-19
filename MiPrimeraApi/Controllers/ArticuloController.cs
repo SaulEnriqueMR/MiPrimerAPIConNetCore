@@ -16,8 +16,8 @@ namespace MiPrimeraApi.Controllers
         {
             new Articulo { Id = 1, Nombre = "Laptop", Descripcion = "Laptop HP", Precio = 15000.00, FechaRegistro = DateTime.Now },
             new Articulo { Id = 2, Nombre = "Impresora", Descripcion = "Impresora Epson", Precio = 8700.00, FechaRegistro = DateTime.Now },
-            new Articulo { Id = 3, Nombre = "Monito", Descripcion = "Monitor ASUS", Precio = 1600.00, FechaRegistro = DateTime.Now },
-            new Articulo { Id = 4, Nombre = "Cable USB", Descripcion = "Cable USB Generico", Precio = 193.00, FechaRegistro = DateTime.Now }
+            new Articulo { Id = 3, Nombre = "Monitor", Descripcion = "Monitor ASUS", Precio = 1600.00, FechaRegistro = DateTime.Now },
+            new Articulo { Id = 4, Nombre = "Cable USB", Descripcion = "Cable USB Genérico", Precio = 193.00, FechaRegistro = DateTime.Now }
         };
 
         public ArticuloController()
