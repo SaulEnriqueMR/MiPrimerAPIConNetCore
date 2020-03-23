@@ -1,4 +1,4 @@
-# Integrando MySQL a .NetCore
+# Integrando un Sistema Gestor de Base de Datos a .NetCore
 
 # Requerimientos
 
@@ -10,6 +10,8 @@
 
 # Instalacion del Gestor de Base de Datos SQL
 
+## Instalacion del Gestor de Base de Datos
+
 Primero tenemos que instalar un gestor de base de datos SQL:
 
 ```bash
@@ -18,4 +20,25 @@ Primero tenemos que instalar un gestor de base de datos SQL:
 
 > Para este ejemplo se instalara MariaDB
 
-Una vez que se instalo, en nuestro proyecto ejecutaremos el siguiente comando:
+Una vez se instale nuestro Gestor de Base de Datos, ejecutamos las siguientes sentencias *SQL*:
+
+```sql
+    DROP USER IF EXISTS gestionarticulos@localhost;
+    CREATE USER IF NOT EXISTS gestionarticulos@localhost IDENTIFIED BY 'gestionarticulos';
+
+    DROP DATABASE IF EXISTS gestionarticulos;
+    CREATE DATABASE IF NOT EXISTS gestionarticulos DEFAULT CHARACTER SET utf8;
+
+    GRANT ALL PRIVILEGES ON gestionarticulos.* TO gestionarticulos@localhost;
+    FLUSH PRIVILEGES;
+```
+
+Para simpleza de esta guia ocuparemos el mismo nombre para usuario, nombre de la base de datos y contrasena.
+
+## Instalacion de EntityFrameworkCore
+
+En nuestro proyecto ejecutamos el siguiente comando:
+
+```bash
+    dotnet add package Pomelo.EntityFrameworkCore.MySql --version 3.1.1
+```
