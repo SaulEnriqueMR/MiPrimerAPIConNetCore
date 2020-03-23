@@ -84,10 +84,12 @@ namespace MiPrimeraApi.Controllers
 
         // PUT api/articulo/5
         [HttpPut]
+        [Route("{id}")]
         public IActionResult Editar(int id, Articulo articulo)
         {
+            var articuloOriginal = articulos.FirstOrDefault(a => a.Id == id);
             articulo.Id = id;
-            var indice = articulos.IndexOf(articulo);
+            var indice = articulos.IndexOf(articuloOriginal);
             articulos[indice].Nombre = articulo.Nombre;
             articulos[indice].Descripcion = articulo.Descripcion;
             articulos[indice].Precio = articulo.Precio;
@@ -96,6 +98,7 @@ namespace MiPrimeraApi.Controllers
 
         // DELETE api/articulo/5
         [HttpDelete]
+        [Route("{id}")]
         public IActionResult Borrar(int id)
         {
             var articulo = articulos.FirstOrDefault(a => a.Id == id);
