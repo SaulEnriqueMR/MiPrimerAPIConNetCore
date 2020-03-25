@@ -22,12 +22,15 @@ Una vez se instale nuestro Gestor de Base de Datos, ejecutamos las siguientes se
 
 ```sql
     DROP USER IF EXISTS gestionarticulos@localhost;
-    CREATE USER IF NOT EXISTS gestionarticulos@localhost IDENTIFIED BY 'gestionarticulos';
+    CREATE USER IF NOT EXISTS gestionarticulos@localhost
+    IDENTIFIED BY 'gestionarticulos';
 
     DROP DATABASE IF EXISTS gestionarticulos;
-    CREATE DATABASE IF NOT EXISTS gestionarticulos DEFAULT CHARACTER SET utf8;
+    CREATE DATABASE IF NOT EXISTS gestionarticulos
+    DEFAULT CHARACTER SET utf8;
 
-    GRANT ALL PRIVILEGES ON gestionarticulos.* TO gestionarticulos@localhost;
+    GRANT ALL PRIVILEGES ON gestionarticulos.*
+    TO gestionarticulos@localhost;
     FLUSH PRIVILEGES;
 ```
 
@@ -52,7 +55,9 @@ En nuestro *appsettings.Development.json* hay que introducir las siguientes lín
 
 ```json
     "ConnectionStrings": {
-        "DefaultConnection": "server=localhost;database=gestionarticulos;uid=gestionarticulos;password=gestionarticulos"
+        "DefaultConnection": "server=localhost;database=gestionarticulos;
+        uid=gestionarticulos;password=gestionarticulos"
+        // Importante: Esto va en la misma linea
     },
 ```
 
@@ -73,7 +78,10 @@ En nuestra carpeta de *Models*, crearemos la clase *GestionArticulosContext*, es
     {
         public class GestionArticulosContext : DbContext
         {
-            public GestionArticulosContext(DbContextOptions<GestionArticulosContext> opciones) : base(opciones) { }
+            public GestionArticulosContext
+            (DbContextOptions<GestionArticulosContext> opciones) 
+            : base(opciones) { }
+            // IMPORTANTE: Esto va en la misma linea
 
             // Este es el mapeo objeto-base de datos
             public DbSet<Articulo> Articulos { set; get; }
@@ -92,7 +100,9 @@ Agregamos las siguientes dependencias:
 En nuestro archivo *Startup.cs*, en el método *ConfigureServices* agregamos las siguientes líneas al inicio del método:
 
 ```c#
-    // Esta línea específica que creará tantas instancias de *GestionArticulosContext* como sean necesarias.
+    // Esta línea específica que creará
+    // tantas instancias de *GestionArticulosContext*
+    // como sean necesarias.
     services.AddDbContextPool<GestionArticulosContext>(options =>
                         options.UseLazyLoadingProxies()
                             .UseMySql(Configuration.
@@ -132,7 +142,8 @@ En nuestro controlador de Articulo agregamos el siguiente atributo de clase:
 El constructor se modificaría de la siguiente manera:
 
 ```c#
-    // Con esto estamos declarando que se aplique inyeccion de dependencias de GestionArticulosContext
+    // Con esto estamos declarando que se aplique
+    // inyeccion de dependencias de GestionArticulosContext
     public ArticuloController(GestionArticulosContext contexto)
     {
         _contexto = contexto;
@@ -160,7 +171,8 @@ Para registrar un nuevo artículo quedaría de la siguiente manera:
     [Route("")]
     public IActionResult Registrar(Articulo articulo)
     {
-        // Hay que recordar que a la hora de hacer un post no hace falta registrar el ID, pues este es generado automáticamente.
+        // Hay que recordar que a la hora de hacer un post
+        // no hace falta registrar el ID, pues este es generado automáticamente.
         articulo.FechaRegistro = DateTime.Now;
         _contexto.Articulos.Add(articulo);
         _contexto.SaveChanges();
