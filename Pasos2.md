@@ -151,9 +151,9 @@ Ahora nuestro método para obtener todos quedaría algo asi:
     }
 ```
 
-Si se quiere, se puede ejecutar la aplicacion, aunque este método retornara una lista vacia.
+Si se quiere, se puede ejecutar la aplicacion, aunque este método retornará una lista vacia.
 
-Para registrar un nuevo articulo quedaría de la siguiente manera:
+Para registrar un nuevo artículo quedaría de la siguiente manera:
 
 ```c#
     [HttpPost]
@@ -168,4 +168,4 @@ Para registrar un nuevo articulo quedaría de la siguiente manera:
     }
 ```
 
-> El/la estudiante debe implementar el resto de los metodos, asi como de Proveedor
+> El/la estudiante deberá implementar el resto de los métodos, asi como los de Proveedor
