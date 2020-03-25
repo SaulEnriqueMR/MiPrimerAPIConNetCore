@@ -12,17 +12,11 @@ namespace MiPrimeraApi.Controllers
     [ApiController]
     public class ArticuloController : ControllerBase
     {
-        List<Articulo> articulos = new List<Articulo>()
-        {
-            new Articulo { Id = 1, Nombre = "Laptop", Descripcion = "Laptop HP", Precio = 15000.00, FechaRegistro = DateTime.Now },
-            new Articulo { Id = 2, Nombre = "Impresora", Descripcion = "Impresora Epson", Precio = 8700.00, FechaRegistro = DateTime.Now },
-            new Articulo { Id = 3, Nombre = "Monitor", Descripcion = "Monitor ASUS", Precio = 1600.00, FechaRegistro = DateTime.Now },
-            new Articulo { Id = 4, Nombre = "Cable USB", Descripcion = "Cable USB Genérico", Precio = 193.00, FechaRegistro = DateTime.Now }
-        };
+        private readonly GestionArticulosContext _contexto;
 
-        public ArticuloController()
+        public ArticuloController(GestionArticulosContext contexto)
         {
-            
+            _contexto = contexto;
         }
 
         // GET api/articulo
@@ -30,6 +24,7 @@ namespace MiPrimeraApi.Controllers
         [Route("")]
         public IActionResult Obtener()
         {
+            var articulos = _contexto.Articulos.ToList();
             return Ok(articulos);
         }
 
@@ -38,24 +33,21 @@ namespace MiPrimeraApi.Controllers
         [Route("{id}")]
         public IActionResult ObtenerPorId(int id)
         {
-            var articulo = articulos.FirstOrDefault(a => a.Id == id);
-            if (articulo == null)
-            {
-                return NotFound();   
-            }
-            return Ok(articulo);
+            return Ok();
         }
 
         [HttpGet]
         [Route("nombre/{nombre}")]
-        public IActionResult BuscarPorAtributo(string nombre) {
-            return Ok(nombre);
+        public IActionResult BuscarPorAtributo(string nombre) 
+        {
+            return Ok();
         }
 
         [HttpGet]
         [Route("buscar")]
-        public IActionResult BuscarPorQueryParameter(string nombre) {
-            return Ok(nombre);
+        public IActionResult BuscarPorQueryParameter(string nombre) 
+        {
+            return Ok();
         }
 
         // POST api/articulo
@@ -63,23 +55,10 @@ namespace MiPrimeraApi.Controllers
         [Route("")]
         public IActionResult Registrar(Articulo articulo)
         {
-            articulos.Add(articulo);
-            if (articulo.Descripcion == null)
-            {
-                return BadRequest(new 
-                {
-                    errors = new 
-                    {
-                        Descripcion = new List<string>()
-                        {
-                            "Ingrese una descripcion"
-                        }
-                    }
-                });
-            }
             articulo.FechaRegistro = DateTime.Now;
+            _contexto.Articulos.Add(articulo);
+            _contexto.SaveChanges();
             return CreatedAtAction(nameof(ObtenerPorId), new {articulo.Id}, articulo);
-            //return Ok(articulos);
         }
 
         // PUT api/articulo/5
@@ -87,12 +66,6 @@ namespace MiPrimeraApi.Controllers
         [Route("{id}")]
         public IActionResult Editar(int id, Articulo articulo)
         {
-            var articuloOriginal = articulos.FirstOrDefault(a => a.Id == id);
-            articulo.Id = id;
-            var indice = articulos.IndexOf(articuloOriginal);
-            articulos[indice].Nombre = articulo.Nombre;
-            articulos[indice].Descripcion = articulo.Descripcion;
-            articulos[indice].Precio = articulo.Precio;
             return Ok();
         }
 
@@ -101,8 +74,6 @@ namespace MiPrimeraApi.Controllers
         [Route("{id}")]
         public IActionResult Borrar(int id)
         {
-            var articulo = articulos.FirstOrDefault(a => a.Id == id);
-            articulos.Remove(articulo);
             return Ok();
         }
     }

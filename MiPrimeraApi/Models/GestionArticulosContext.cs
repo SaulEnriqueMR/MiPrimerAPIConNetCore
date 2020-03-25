@@ -11,7 +11,7 @@ namespace MiPrimeraApi.Models
     {
         public GestionArticulosContext(DbContextOptions<GestionArticulosContext> opciones) : base(opciones) { }
 
-        DbSet<Articulo> Articulos { set; get; }
+        public DbSet<Articulo> Articulos { set; get; }
         // DbSet<Proveedor> Proveedores { set; get; }
     }
 }

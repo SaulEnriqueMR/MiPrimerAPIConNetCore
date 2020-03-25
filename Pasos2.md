@@ -46,6 +46,8 @@ En nuestro proyecto ejecutamos el siguiente comando:
     dotnet add package Microsoft.EntityFrameworkCore.Proxies --version 3.1.3
 ```
 
+>NOTA: El comando *dotnet tool install --global dotnet-ef* ya no se tendra que ejecutar la proxima vez que se cree un nuevo proyecto
+
 ### *ConnectionStrings*
 
 En nuestro *appsettings.Development.json* introducimos las siguientes lineas
@@ -76,7 +78,7 @@ En nuestra carpeta de Models, crearemos la clase *GestionArticulosContext*, esta
             public GestionArticulosContext(DbContextOptions<GestionArticulosContext> opciones) : base(opciones) { }
 
             // Este es el mapeo objeto-base de datos
-            DbSet<Articulo> Articulos { set; get; }
+            public DbSet<Articulo> Articulos { set; get; }
         }
     }
 
@@ -93,6 +95,7 @@ Agregamos las siguientes dependencias:
 En nuestro archivo *Startup.cs* en el metodo *ConfigureServices* agregamos las siguientes lineas al inicio de nuestro metodo:
 
 ```c#
+    // Esta lina especifica que aplicara tantas inyecciones de dependencias de *GestionArticulosContext* como sean necesarias.
     services.AddDbContextPool<GestionArticulosContext>(options =>
                         options.UseLazyLoadingProxies()
                             .UseMySql(Configuration.
@@ -121,3 +124,50 @@ Una vez ejecutado ese comando, si se desea se puede observar en el gestor de bas
 
 > NOTA: Al igual que con los commits, las migraciones deben de ser pequenas para facilitar su control
 
+## Incorporando *EntityFrameworkCore* a nuestro controlador
+
+En nuestro controlador de Articulo agregamos el siguiente atributo de clase:
+
+```c#
+    private readonly SisManContext _contexto;
+```
+
+El constructor se modificaria de la siguiente manera:
+
+```c#
+    // Con esto estamos declarando que se aplique inyeccion de dependencias de GestionArticulosContext
+    public ArticuloController(GestionArticulosContext contexto)
+    {
+        _contexto = contexto;
+    }
+```
+
+Ahora nuestro metodo para obtener todos quedaria algo asi:
+
+```c#
+    [HttpGet]
+    [Route("")]
+    public IActionResult Obtener()
+    {
+        var articulos = _contexto.Articulos.ToList();
+        return Ok(articulos);
+    }
+```
+
+Si se quiere se puede ejecutar la aplicacion, aunque retornara una lista vacia
+
+Para registrar un nuevo articulo quedaria de la siguiente manera:
+
+```c#
+    [HttpPost]
+    [Route("")]
+    public IActionResult Registrar(Articulo articulo)
+    {
+        articulo.FechaRegistro = DateTime.Now;
+        _contexto.Articulos.Add(articulo);
+        _contexto.SaveChanges();
+        return CreatedAtAction(nameof(ObtenerPorId), new {articulo.Id}, articulo);
+    }
+```
+
+> El/la estudiante debe implementar el resto de los metodos, asi como de Proveedor
