@@ -1,6 +1,6 @@
 # Integrando un Sistema Gestor de Base de Datos a .NetCore
 
-# Requerimientos
+## Requerimientos
 
 * Estar en un sistema *Linux* (en una distribución basada en *Debian*, *Ubuntu* o *Fedora*).
 * Tener *.NetCore* instalado en el sistema, en su última [version LTS](https://dotnet.microsoft.com/download) (al momento la elaboración de esta guía es la versión 3.1).
@@ -8,9 +8,7 @@
 * Un editor de texto o IDE.
 * *Postman* o cualquier herramienta para probar APIs.
 
-# Instalacion del Gestor de Base de Datos SQL
-
-## Instalacion del Gestor de Base de Datos
+## Instalación del Gestor de Base de Datos SQL
 
 Primero tenemos que instalar un gestor de base de datos SQL:
 
@@ -18,7 +16,7 @@ Primero tenemos que instalar un gestor de base de datos SQL:
     sudo apt install mariadb-server
 ```
 
-> Para este ejemplo se instalara MariaDB
+> Para este ejemplo se instalará MariaDB
 
 Una vez se instale nuestro Gestor de Base de Datos, ejecutamos las siguientes sentencias *SQL*:
 
@@ -33,11 +31,11 @@ Una vez se instale nuestro Gestor de Base de Datos, ejecutamos las siguientes se
     FLUSH PRIVILEGES;
 ```
 
-Para simpleza de esta guia ocuparemos el mismo nombre para usuario, nombre de la base de datos y contrasena.
+Para simpleza de esta guía ocuparemos el mismo nombre para usuario, nombre de la base de datos y contraseña.
 
-## Instalacion de EntityFrameworkCore
+## Instalación de EntityFrameworkCore
 
-En nuestro proyecto ejecutamos el siguiente comando:
+En nuestro proyecto ejecutamos los siguientes comandos:
 
 ```bash
     dotnet tool install --global dotnet-ef
@@ -46,11 +44,11 @@ En nuestro proyecto ejecutamos el siguiente comando:
     dotnet add package Microsoft.EntityFrameworkCore.Proxies --version 3.1.3
 ```
 
->NOTA: El comando *dotnet tool install --global dotnet-ef* ya no se tendra que ejecutar la proxima vez que se cree un nuevo proyecto
+>NOTA: El comando *dotnet tool install --global dotnet-ef* ya no se tendrá que ejecutar la proxima vez que se cree un nuevo proyecto.
 
 ### *ConnectionStrings*
 
-En nuestro *appsettings.Development.json* introducimos las siguientes lineas
+En nuestro *appsettings.Development.json* hay que introducir las siguientes líneas:
 
 ```json
     "ConnectionStrings": {
@@ -58,11 +56,11 @@ En nuestro *appsettings.Development.json* introducimos las siguientes lineas
     },
 ```
 
-> NOTA: Esta *ConnectionString* solo servira para el el perfil de desarrollo (el que se ejecuta con: *dotnet run*), para el despliegue el *ConnectionString* debe ir en *appsettings.json*
+> NOTA: Esta *ConnectionString* solo servirá para el el perfil de desarrollo (el que se ejecuta con: *dotnet run*), para el despliegue el *ConnectionString* debe ir en el archivo *appsettings.json*.
 
 ### Creando un DBContext
 
-En nuestra carpeta de Models, crearemos la clase *GestionArticulosContext*, esta deberia verse algo asi:
+En nuestra carpeta de *Models*, crearemos la clase *GestionArticulosContext*, esta debería verse algo así:
 
 ```c#
     using Microsoft.EntityFrameworkCore;
@@ -81,40 +79,39 @@ En nuestra carpeta de Models, crearemos la clase *GestionArticulosContext*, esta
             public DbSet<Articulo> Articulos { set; get; }
         }
     }
-
 ```
 
-### Obteniendo conexion
+### Obteniendo la conexión
 
-Agregamos las siguientes dependencias: 
+Agregamos las siguientes dependencias:
 
 ```c#
     using Microsoft.EntityFrameworkCore;
 ```
 
-En nuestro archivo *Startup.cs* en el metodo *ConfigureServices* agregamos las siguientes lineas al inicio de nuestro metodo:
+En nuestro archivo *Startup.cs*, en el método *ConfigureServices* agregamos las siguientes líneas al inicio del método:
 
 ```c#
-    // Esta lina especifica que aplicara tantas inyecciones de dependencias de *GestionArticulosContext* como sean necesarias.
+    // Esta línea específica que creará tantas instancias de *GestionArticulosContext* como sean necesarias.
     services.AddDbContextPool<GestionArticulosContext>(options =>
                         options.UseLazyLoadingProxies()
                             .UseMySql(Configuration.
                                 GetConnectionString("DefaultConnection")));
 ```
 
-### Haciendo la primera migracion
+### Haciendo la primera migración
 
-Las migraciones se pueden ver similar a un *commit*, donde todos los cambios que se efectuen en nuestro *GestionarArticulosContext* asi como todas las clases que se agreguen a un *DbSet* se veran reflejadas en la migracion.
+Las migraciones pueden ser vistas como algo similar a un *commit*, donde todos los cambios que se efectuen en *GestionarArticulosContext*, así como cambios en las clases que se agreguen a un *DbSet* se verán reflejadas en la migración.
 
-Para hacer una migracion se ocupa el siguiente comando:
+Para hacer una migración se ocupa el siguiente comando:
 
 ```bash
     dotnet ef migrations add CreacionArticulo
 ```
 
-Este comando creara una carpeta Migrations con varias clase, si accedemos al archivo *###_CreacionArticulo.cs*, se puede observar que se define la creacion de la tabla *Articulos*.
+Este comando creará una carpeta Migrations con varias clase, si accedemos al archivo *###_CreacionArticulo.cs*, se puede observar que se define la creación de la tabla *Articulos*.
 
-Una vez que hemos hecho nuestra migracion, solo queda actualizar con la base de datos, para eso se ejecuta el siguiente comando
+Una vez que hemos hecho nuestra migración, sólo queda sincronizar con la base de datos, para eso se ejecuta el siguiente comando:
 
 ```bash
     dotnet ef database update
@@ -122,7 +119,7 @@ Una vez que hemos hecho nuestra migracion, solo queda actualizar con la base de 
 
 Una vez ejecutado ese comando, si se desea se puede observar en el gestor de base de datos que se creo esta tabla.
 
-> NOTA: Al igual que con los commits, las migraciones deben de ser pequenas para facilitar su control
+> NOTA: Al igual que con los commits, las migraciones deben de ser pequenas para facilitar su control.
 
 ## Incorporando *EntityFrameworkCore* a nuestro controlador
 
@@ -132,7 +129,7 @@ En nuestro controlador de Articulo agregamos el siguiente atributo de clase:
     private readonly SisManContext _contexto;
 ```
 
-El constructor se modificaria de la siguiente manera:
+El constructor se modificaría de la siguiente manera:
 
 ```c#
     // Con esto estamos declarando que se aplique inyeccion de dependencias de GestionArticulosContext
@@ -142,7 +139,7 @@ El constructor se modificaria de la siguiente manera:
     }
 ```
 
-Ahora nuestro metodo para obtener todos quedaria algo asi:
+Ahora nuestro método para obtener todos quedaría algo asi:
 
 ```c#
     [HttpGet]
@@ -154,15 +151,16 @@ Ahora nuestro metodo para obtener todos quedaria algo asi:
     }
 ```
 
-Si se quiere se puede ejecutar la aplicacion, aunque retornara una lista vacia
+Si se quiere, se puede ejecutar la aplicacion, aunque este método retornara una lista vacia.
 
-Para registrar un nuevo articulo quedaria de la siguiente manera:
+Para registrar un nuevo articulo quedaría de la siguiente manera:
 
 ```c#
     [HttpPost]
     [Route("")]
     public IActionResult Registrar(Articulo articulo)
     {
+        // Hay que recordar que a la hora de hacer un post no hace falta registrar el ID, pues este es generado automáticamente.
         articulo.FechaRegistro = DateTime.Now;
         _contexto.Articulos.Add(articulo);
         _contexto.SaveChanges();
