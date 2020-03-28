@@ -3,14 +3,16 @@ using System;
 using MiPrimeraApi.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MiPrimeraApi.Migrations
 {
     [DbContext(typeof(GestionArticulosContext))]
-    partial class GestionArticulosContextModelSnapshot : ModelSnapshot
+    [Migration("20200328031345_RelacionArticuloProveedor")]
+    partial class RelacionArticuloProveedor
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

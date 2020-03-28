@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MiPrimeraApi.Models
 {
-    class Proveedor
+    public class Proveedor
     {
         public int Id {set;get;}
         public string Nombre {set;get;}

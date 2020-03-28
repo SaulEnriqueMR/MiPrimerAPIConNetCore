@@ -3,14 +3,16 @@ using System;
 using MiPrimeraApi.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MiPrimeraApi.Migrations
 {
     [DbContext(typeof(GestionArticulosContext))]
-    partial class GestionArticulosContextModelSnapshot : ModelSnapshot
+    [Migration("20200328031250_CreacionProveedor")]
+    partial class CreacionProveedor
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,12 +38,7 @@ namespace MiPrimeraApi.Migrations
                     b.Property<double>("Precio")
                         .HasColumnType("double");
 
-                    b.Property<int>("ProveedorID")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("ProveedorID");
 
                     b.ToTable("Articulos");
                 });
@@ -61,15 +58,6 @@ namespace MiPrimeraApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Proveedores");
-                });
-
-            modelBuilder.Entity("MiPrimeraApi.Models.Articulo", b =>
-                {
-                    b.HasOne("MiPrimeraApi.Models.Proveedor", "Proveedor")
-                        .WithMany()
-                        .HasForeignKey("ProveedorID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
