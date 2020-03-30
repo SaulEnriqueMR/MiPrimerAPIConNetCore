@@ -1,4 +1,4 @@
-# Llaves foraneas, patron de repositorio e inyeccion de dependencias
+# Llaves fóraneas, patrón de repositorio e inyección de dependencias
 
 ## Requerimientos
 
@@ -18,7 +18,7 @@ Primero tenemos que instalar el siguiente paquete:
     dotnet add package Microsoft.AspNetCore.Mvc.NewtonsoftJson --version 3.1.2
 ```
 
-Despues en nuestro *Startup.cs*, en el metodo *ConfigureServices* lo modificamos y deberia quedar de la siguiente manera:
+Después en nuestro *Startup.cs*, en el método *ConfigureServices* lo modificamos y debería quedar de la siguiente manera:
 
 ```c#
     public void ConfigureServices(IServiceCollection services)
@@ -27,17 +27,17 @@ Despues en nuestro *Startup.cs*, en el metodo *ConfigureServices* lo modificamos
             options.UseLazyLoadingProxies()
                 .UseMySql(Configuration.
                     GetConnectionString("DefaultConnection")));
-        services.AddControllers().AddNewtonsoftJson(options => 
-            options.SerializerSettings.ReferenceLoopHandling = 
+        services.AddControllers().AddNewtonsoftJson(options =>
+            options.SerializerSettings.ReferenceLoopHandling =
                 Newtonsoft.Json.ReferenceLoopHandling.Ignore);
     }
 ```
 
 ## Agregando llaves foraneas
 
-### Creando una relacion
+### Creando una relación
 
-Para definir una relacion, en nuestro caso de Articulo a Proveedor. En la clase Articulo agregaremos los siguientes atributos:
+Para definir una relación, en nuestro caso de Articulo a Proveedor. En la clase Articulo agregaremos los siguientes atributos:
 
 ```c#
     // Este define la columna donde estara la llave foranea
@@ -46,13 +46,13 @@ Para definir una relacion, en nuestro caso de Articulo a Proveedor. En la clase 
     public virtual Proveedor Proveedor { set; get; }
 ```
 
-Una vez hecha la relacion podemos hacer nuestra migracion:
+Una vez hecha la relación podemos hacer nuestra migración:
 
 ```bash
     dotnet ef migrations add RelacionArticuloProveedor
 ```
 
-Si se desea podemos verificar que la migracion fue hecha correctamente, una vez hecho eso sincronizamos la base de datos
+Si se desea podemos verificar que la migración fue hecha correctamente, una vez hecho eso sincronizamos la base de datos
 
 ```bash
     dotnet ef database update
@@ -72,22 +72,23 @@ En *Postman* insertamos el siguiente cuerpo de solicitud para registrar un Artic
 
 ```json
     {
-	    "Nombre": "Laptop",
-	    "Descripcion": "Laptop HP",
-	    "Precio": 15000.00,
-	    "ProveedorID": 1
+        "Nombre": "Laptop",
+        "Descripcion": "Laptop HP",
+        "Precio": 15000.00,
+        "ProveedorID": 1
     }
 ```
 
-Esto deberia crearnos un Articulo que hace referencia a Proveedor con id = 1
+Esto debería crearnos un Articulo que hace referencia a Proveedor con id = 1
 
-### Relacion 1 a 1
-Todos los pasos hecho en el tema pasado fueron para crear una relacion de 1 a 1.
+### Relación 1 a 1
 
-Si se hace la consulta desde Postman al Articulo recien registrado, deberia devolvermos algo similar a esto:
+Todos los pasos hecho en el tema pasado fueron para crear una relación de 1 a 1.
+
+Si se hace la consulta desde Postman al Articulo recien registrado, debería devolvermos algo similar a esto:
 
 ```json
-    /* Este es el objeto relacionado */
+    /* Este es el objeto relaciónado */
     {
     "proveedor": {
         "id": 1,
@@ -104,22 +105,22 @@ Si se hace la consulta desde Postman al Articulo recien registrado, deberia devo
 }
 ```
 
-### Relacion de 1 a muchos
+### Relación de 1 a muchos
 
-Para declarar una relacion de 1 a muchos, solo se debe de hacer lo siguiente a la clase de Proveedor:
+Para declarar una relación de 1 a muchos, solo se debe de hacer lo siguiente a la clase de Proveedor:
 
 ```c#
     public virtual ICollection<Articulo> Articulos { set; get; }
 ```
 
-Despues de eso, hacemos la migracion y sincronizamos con la base de datos
+Despues de eso, hacemos la migración y sincronizamos con la base de datos
 
 ```bash
-    dotnet ef migrations add RelacionArticuloProveedorUnoAMuchos
+    dotnet ef migrations add relaciónArticuloProveedorUnoAMuchos
     dotnet ef database update
 ```
 
-Ahora si queremos probar, en Postman podemos consultar al Proveedor que le hayamos registrado los Articulos y nos deberia dar algo similiar a lo siguiente:
+Ahora si queremos probar, en Postman podemos consultar al Proveedor que le hayamos registrado los Articulos y nos debería dar algo similiar a lo siguiente:
 
 ```c#
     [
@@ -149,15 +150,15 @@ Ahora si queremos probar, en Postman podemos consultar al Proveedor que le hayam
     ]
 ```
 
-Como se puede notar, al obtener el Proveedor, tambien nos da una lista de articulos registrados
+Como se puede notar, al obtener el Proveedor, también nos da una lista de articulos registrados
 
-### Relacion de muchos a muchos
+### Relación de muchos a muchos
 
->Nota: este no es necesario que se sigan estos pasos, esto solo tiene como proposito la demostracion de una relacion de muchos a muchos.
+>Nota: Este fragmento no es necesario seguirlo, esto solo tiene como propósito la demostración de como se implementa una relación de muchos a muchos.
 
-Suponiendo que entre Articulos y Proveedores hubiera una relacion de muchos a muchos.
+Suponiendo que entre Articulos y Proveedores hubiera una relación de muchos a muchos.
 
-Primero tenemos que hacer una clase que va representar a nuestra tabla intermedia, esta quedaria de la siguiente manera:
+Primero tenemos que hacer una clase que va representar a nuestra tabla intermedia, esta ser;ia de la siguiente manera:
 
 ```c#
     using System;
@@ -179,13 +180,13 @@ Primero tenemos que hacer una clase que va representar a nuestra tabla intermedi
     }
 ```
 
-Despues de eso en nuestra clase de Proveedor y Articulo agregamos el siguiente atributo:
+Después de esto, en nuestra clase de Proveedor y Articulo agregamos el siguiente atributo:
 
 ```c#
-    public virtual ICollection<ArticuloTieneProveedor> ArticuloTieneProveedores { set; get; }
+    public virtual ICollection<ArticuloTieneProveedor> ArticulosTienenProveedores { set; get; }
 ```
 
->Nota: Puede tener el mismo nombre en las dos clases o distinto, lo importante es que sea un dato de tipo *virtual ICollection*
+>Nota: No es necesario que tengan el mismo nombre en las dos clases.
 
 Una vez hecho eso, solo debemos agregar este atributo a nuestra clase *GestionArticulosContext*:
 
@@ -193,28 +194,24 @@ Una vez hecho eso, solo debemos agregar este atributo a nuestra clase *GestionAr
     public DbSet<ArticuloTieneProveedor> ArticulosTienenProveedores { set; get; }
 ```
 
-Y por ultimo, debemos hacer la migracion y sincronizar la base de datos
+Y por último, debemos hacer la migración y sincronizar la base de datos
 
 ```bash
     dotnet ef migrations add RelacionArticuloProveedorMuchosAMuchos
     dotnet ef database update
 ```
 
-## Patron repositorio
+## Patrón repositorio
 
 El patrón de repositorio tiene por objetivo crear una capa de abstracción entre la capa de acceso a los datos y la capa de lógica de negocio de una aplicación. La adición, eliminación, actualización y selección de elementos de esta colección se realiza a través de una serie de métodos sencillos, sin necesidad de tratar con asuntos de la base de datos como conexiones, comandos, cursores o lectores. Ademas su implementación puede ayudar a aislar nuestra aplicación de los cambios en el gestor de datos y a su vez facilita las pruebas de unidad automatizadas o el desarrollo basado en pruebas (TDD).
 
-Para implementar el patron repositorio solo hace falta hacer lo siguiente:
+Para implementar el patrón repositorio solo hace falta hacer lo siguiente:
 
 Crear una carpeta donde se alojaran todas las *Interfaces* y sus implementaciones.
 
-```bash
-    mkdir Repositories
-```
-
 En mi caso lo llamare a esta carpeta *Repositories*
 
-En esta carpeta vamos a crear nuestra primera interfaz, la cual voy a llamar *IArticuloRepository* y en esta interfaz agregaremos los metodos que necesitaremos, en este ejemplo solo agregare el metodo de obtener todos y obtener por Id:
+En esta carpeta vamos a crear nuestra primera interfaz, la cuál voy a llamar *IArticuloRepository* y en esta interfaz agregaremos los métodos que necesitaremos, en este ejemplo sólo agregaré el método de obtener todos y obtener por id:
 
 ```c#
     using MiPrimeraApi.Models;
@@ -233,7 +230,7 @@ En esta carpeta vamos a crear nuestra primera interfaz, la cual voy a llamar *IA
     }
 ```
 
-Despues de eso, creamos la clase que va a implementar nuestra interfaz, en este caso la llamare *ArticuloRepository* y deberia de verse de la siguiente manera:
+Despues de eso, creamos la clase *ArticuloRepository* y esta va a implementar nuestra interfaz y debería contener la siguiente manera:
 
 ```c#
     using MiPrimeraApi.Models;
@@ -267,13 +264,13 @@ Despues de eso, creamos la clase que va a implementar nuestra interfaz, en este 
     }
 ```
 
-Una vez implementados los repositorios, solo hace falta aplicar inyeccion de dependencias en nuestros controladores para que se puedan ocupar.
+Una vez implementados los repositorios, sólo hace falta aplicar inyección de dependencias en nuestros controladores para que se puedan ocupar los repositorios.
 
-## Inyeccion de dependencias
+## inyección de dependencias
 
 La inyección de dependencias es un patrón de diseño orientado a objetos, en el que se suministran objetos a una clase en lugar de ser la propia clase la que cree dichos objetos. Esos objetos cumplen contratos que necesitan nuestras clases para poder funcionar (de ahí el concepto de dependencia). Nuestras clases no crean los objetos que necesitan, sino que se los suministra otra clase *contenedora* que inyectará la implementación deseada a nuestro contrato.
 
-Al momento, ya hemos creado una inyeccion de dependencias, la cual es nuestro *GestionArticulosContext*. Como se puede notar siempre que hemos ocupado *GestionArticulosContext* jamas se ha creado una instancia de esta, solo llega como parametro, esto es porque en nuestro metodo *ConfigureServices* en *Startup.cs* hemos declarado que aplique la inyeccion de dependencias con las lineas
+Al momento, ya hemos creado una inyección de dependencias, la cual es nuestro *GestionArticulosContext*. Como se puede notar siempre que hemos ocupado *GestionArticulosContext* jamás se ha creado una instancia de esta, sólo llega como parámetro, esto es porque en nuestro método *ConfigureServices* en *Startup.cs* hemos declarado que aplique la inyección de dependencias por medio de las siguientes líneas:
 
 ```c#
     services.AddDbContextPool<GestionArticulosContext>(options =>
@@ -282,36 +279,36 @@ Al momento, ya hemos creado una inyeccion de dependencias, la cual es nuestro *G
                         GetConnectionString("DefaultConnection")));
 ```
 
-Ahora, solo falta ocupar nuestras interfaces de repositorio como contratos para que sean inyectadas en nuestros controladores, para hacer esto se debe hacer lo siguiente:
+Ahora, sólo falta ocupar nuestras interfaces de repositorio como contratos para que sean inyectadas en nuestros controladores, para hacer esto se debe hacer lo siguiente:
 
-En *Startup.cs*, agregamos el siguiente namespace:
+En *Startup.cs*, agregamos el namespace de nuestros repositorios:
 
 ```c#
     using MiPrimeraApi.Repositories;
 ```
 
-Despues, en el metodo *ConfigureServices*, antes de *services.AddControllers()....* agregamos lo siguiente:
+Después, en el método *ConfigureServices*, antes de la línea de *services.AddControllers()....* agregamos lo siguiente:
 
 ```c#
-    // Solo es agregar servies.AddScoped<Interfaz, Implementacion>();
     services.AddScoped<IArticuloRepository, ArticuloRepository>();
+    // Solo es agregar servies.AddScoped<Interfaz, Implementacion>();
 ```
 
-Ahora, para ocupar el repositorio en nuestro controlado se tiene que hacer lo siguiente:
+Ahora, para ocupar el repositorio en nuestro controlador se tiene que hacer lo siguiente:
 
-Agregar el siguiente namespace:
+Agregar el namespace de nuestros repositorios:
 
 ```c#
     using MiPrimeraApi.Repositories;
 ```
 
-Agregar como atributo la interfaz del repositorio
+Agregar como atributo la interfaz del repositorio:
 
 ```c#
     private readonly IArticuloRepository _repoArticulo;
 ```
 
-Y ahora en el constructor del controlador lo dejamos de la siguiente manera:
+Y ahora el constructor del controlador lo dejamos de la siguiente manera:
 
 ```c#
     public ArticuloController(IArticuloRepository repoArticulo)
@@ -320,7 +317,7 @@ Y ahora en el constructor del controlador lo dejamos de la siguiente manera:
     }
 ```
 
-Por ultimo, para acceder a estos solo se tiene que ocupar de la siguiente manera:
+Por último, para acceder a estos solo se tiene que ocupar de la siguiente manera:
 
 ```c#
     [HttpGet]
@@ -342,4 +339,4 @@ Por ultimo, para acceder a estos solo se tiene que ocupar de la siguiente manera
     }
 ```
 
-Para comprobar, si se desea se puede probar en Postman y deberia entregar los mismos resultados que cuando no ocupaba inyeccion de dependencias.
+Si se desea, se puede probar en Postman y al hacer la consulta, debería entregar los mismos resultados que cuando no ocupaba la inyección de dependencias.
