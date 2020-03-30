@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using MiPrimeraApi.Models;
+using MiPrimeraApi.Repositories;
 
 namespace MiPrimeraApi
 {
@@ -31,6 +32,7 @@ namespace MiPrimeraApi
                 options.UseLazyLoadingProxies()
                     .UseMySql(Configuration.
                         GetConnectionString("DefaultConnection")));
+            services.AddScoped<IArticuloRepository, ArticuloRepository>();
             services.AddControllers().AddNewtonsoftJson(options => 
                 options.SerializerSettings.ReferenceLoopHandling = 
                     Newtonsoft.Json.ReferenceLoopHandling.Ignore);

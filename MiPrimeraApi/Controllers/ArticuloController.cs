@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MiPrimeraApi.Models;
+using MiPrimeraApi.Repositories;
 
 namespace MiPrimeraApi.Controllers
 {
@@ -12,11 +13,13 @@ namespace MiPrimeraApi.Controllers
     [ApiController]
     public class ArticuloController : ControllerBase
     {
-        private readonly GestionArticulosContext _contexto;
+        // private readonly GestionArticulosContext _contexto;
+        private readonly IArticuloRepository _repoArticulo;
 
-        public ArticuloController(GestionArticulosContext contexto)
+        public ArticuloController(IArticuloRepository repoArticulo)
         {
-            _contexto = contexto;
+            _repoArticulo = repoArticulo;
+            // _contexto = contexto;
         }
 
         // GET api/articulo
@@ -24,7 +27,7 @@ namespace MiPrimeraApi.Controllers
         [Route("")]
         public IActionResult Obtener()
         {
-            var articulos = _contexto.Articulos.ToList();
+            var articulos = _repoArticulo.ObtenerTodos();
             return Ok(articulos);
         }
 
@@ -33,7 +36,7 @@ namespace MiPrimeraApi.Controllers
         [Route("{id}")]
         public IActionResult ObtenerPorId(int id)
         {
-            var articulo = _contexto.Articulos.FirstOrDefault(x => x.Id == id);
+            var articulo = _repoArticulo.ObtenerPorId(id);
             return Ok(articulo);
         }
 
@@ -56,10 +59,11 @@ namespace MiPrimeraApi.Controllers
         [Route("")]
         public IActionResult Registrar(Articulo articulo)
         {
-            articulo.FechaRegistro = DateTime.Now;
-            _contexto.Articulos.Add(articulo);
-            _contexto.SaveChanges();
-            return CreatedAtAction(nameof(ObtenerPorId), new {articulo.Id}, articulo);
+            // articulo.FechaRegistro = DateTime.Now;
+            // _contexto.Articulos.Add(articulo);
+            // _contexto.SaveChanges();
+            // return CreatedAtAction(nameof(ObtenerPorId), new {articulo.Id}, articulo);
+            return Ok();
         }
 
         // PUT api/articulo/5
