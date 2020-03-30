@@ -15,6 +15,6 @@ namespace MiPrimeraApi.Models
         public DateTime FechaRegistro { set; get; }
         public int ProveedorID { set; get; }
         public virtual Proveedor Proveedor { set; get; }
-        public virtual ICollection<ArticuloTieneProveedor> ArticuloTieneProveedores { set; get; }
+        // public virtual ICollection<ArticuloTieneProveedor> ArticuloTieneProveedores { set; get; }
     }
 }

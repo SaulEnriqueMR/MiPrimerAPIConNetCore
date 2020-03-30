@@ -13,6 +13,6 @@ namespace MiPrimeraApi.Models
 
         public DbSet<Articulo> Articulos { set; get; }
         public DbSet<Proveedor> Proveedores { set; get; }
-        public DbSet<ArticuloTieneProveedor> ArticulosTienenProveedores { set; get; }
+        // public DbSet<ArticuloTieneProveedor> ArticulosTienenProveedores { set; get; }
     }
 }

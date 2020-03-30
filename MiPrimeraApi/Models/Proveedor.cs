@@ -14,7 +14,7 @@ namespace MiPrimeraApi.Models
 
         public string Telefono { set; get; }
 
-        public virtual ICollection<Articulo> Articulos { set; get; }
+        // public virtual ICollection<Articulo> Articulos { set; get; }
     }
 
 }
