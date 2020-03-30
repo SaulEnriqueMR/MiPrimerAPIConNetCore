@@ -9,12 +9,12 @@ namespace MiPrimeraApi.Models
     public class Articulo
     {
         public int Id { set; get; }
-        [Required(ErrorMessage="Ingrese un nombre")]
         public string Nombre { set; get; }
         public string Descripcion { set; get; }
         public double Precio { set; get; }
         public DateTime FechaRegistro { set; get; }
         public int ProveedorID { set; get; }
         public virtual Proveedor Proveedor { set; get; }
+        public virtual ICollection<ArticuloTieneProveedor> ArticuloTieneProveedores { set; get; }
     }
 }

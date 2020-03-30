@@ -33,7 +33,8 @@ namespace MiPrimeraApi.Controllers
         [Route("{id}")]
         public IActionResult ObtenerPorId(int id)
         {
-            return Ok();
+            var articulo = _contexto.Articulos.FirstOrDefault(x => x.Id == id);
+            return Ok(articulo);
         }
 
         [HttpGet]
